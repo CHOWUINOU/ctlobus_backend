@@ -17,7 +17,7 @@ class Bus extends Model
         'marque',
         'statut',
         'nbre_places',
-        'agence_id'];
+        'filiale_id'];
 
     public function filiale()
     {

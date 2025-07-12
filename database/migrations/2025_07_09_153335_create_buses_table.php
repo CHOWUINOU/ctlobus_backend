@@ -17,8 +17,8 @@ return new class extends Migration
             $table->string('marque');
             $table->string('statut');
             $table->integer('nbre_places');
-            $table->unsignedBigInteger('agence_id');
-            $table->foreign('agence_id')->references('id')->on('agences')->onDelete('cascade');
+            $table->unsignedBigInteger('filiale_id');
+            $table->foreign('filiale_id')->references('id')->on('filiales')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
         });
