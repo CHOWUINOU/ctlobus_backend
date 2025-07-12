@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('trajet_id');
             $table->unsignedBigInteger('arret_id');
-            $table->is_string('ordre');
+            $table->string('ordre');
             $table->foreign('trajet_id')->references('id')->on('trajets')->onDelete('cascade');
             $table->foreign('arret_id')->references('id')->on('arrets')->onDelete('cascade');
             $table->timestamps();

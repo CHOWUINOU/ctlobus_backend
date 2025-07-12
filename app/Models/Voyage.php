@@ -42,4 +42,7 @@ class Voyage extends Model
     {
         return $this->hasMany(Reservation::class, 'voyage_id');
     }
+    public function chauffeur(){
+        return $this-> belongsTo(User::class, 'chauffeur_id');
+    }
 }
