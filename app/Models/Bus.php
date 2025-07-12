@@ -6,19 +6,17 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Buses extends Model
+class Bus extends Model
 {
     use HasFactory;
     use SoftDeletes;
 
-    
-    protected $primaryKey = 'bus_id';
 
     protected $fillable = [
         'immatriculation',
-        'marque', 
-        'statut', 
-        'nbre_places', 
+        'marque',
+        'statut',
+        'nbre_places',
         'agence_id'];
 
     public function filiale()
