@@ -11,7 +11,6 @@ class ArretTrajet extends Model
     use HasFactory;
     use SoftDeletes;
 
-     protected $table = 'arret_trajet';
 
     protected $fillable = ['trajet_id', 'arret_id', 'ordre'];
 }

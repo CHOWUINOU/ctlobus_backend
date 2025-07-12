@@ -11,7 +11,7 @@ class Reservation extends Model
     use HasFactory;
     use SoftDeletes;
 
-    protected $primaryKey = ['code_reser'];
+
 
     protected $fillable = [
         'numero_place',

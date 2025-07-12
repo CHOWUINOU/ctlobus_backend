@@ -11,7 +11,6 @@ class Paiement extends Model
     use HasFactory;
     use SoftDeletes;
 
-     protected $primaryKey = 'paiement_id';
 
     protected $fillable = [
         'methode',

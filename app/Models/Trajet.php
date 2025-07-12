@@ -11,13 +11,13 @@ class Trajet extends Model
     use HasFactory;
     use SoftDeletes;
 
-    
-    protected $primaryKey = 'trajet_id';
+
+
 
     protected $fillable = [
         'ville_depart',
-        'ville_arrivee', 
-        'heure_depart', 
+        'ville_arrivee',
+        'heure_depart',
         'heure_arrivee',
         'date_depart',
         'prix',
@@ -34,6 +34,6 @@ class Trajet extends Model
     {
         return $this->belongsToMany(Arret::class, 'arret_trajet')
         ->withPivot('ordre')
-        ->withTimestamp();
+        ->withTimestamps();
     }
 }

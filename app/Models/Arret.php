@@ -10,10 +10,9 @@ class Arret extends Model
 {
     use HasFactory;
     use SoftDeletes;
-    
 
-    protected $primarykey = 'arret_id';
-    
+
+
     protected $fillable = [
         'nom_ville',
         'adresse',

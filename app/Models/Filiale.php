@@ -11,15 +11,15 @@ class Filiale extends Model
     use HasFactory;
     use SoftDeletes;
 
-    protected $primaryKey = 'filiale_id';
+
 
     protected $fillable = [
-        'nom', 
-        'ville', 
-        'adresse', 
+        'nom',
+        'ville',
+        'adresse',
         'telephone',
-        'email', 
-        'logo', 
+        'email',
+        'logo',
         'agence_id'
     ];
 
@@ -32,13 +32,13 @@ class Filiale extends Model
     {
         return $this->hasMany(Guichet::class, 'filiale_id');
     }
-    
+
      public function buses(){
-        return $this->hasMany(buses::class, 'filiale_id');
+        return $this->hasMany(Bus::class, 'filiale_id');
     }
 
      public function voyages()
     {
-        return $this->hasMany(Voyage::class);
+        return $this->hasMany(Voyage::class,'filiale_id');
     }
 }

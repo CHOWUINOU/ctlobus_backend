@@ -11,7 +11,7 @@ class Agence extends Model
     use HasFactory;
     use SoftDeletes;
 
-    protected $primarykey = 'agence_id';
+
     protected $fillable = [
             'nom',
             'ville',
@@ -27,11 +27,11 @@ class Agence extends Model
     /*plusieurs filiales */
 
     public function filiales(){
-        return $this->hasMany(filiales::class, 'agence_id');
+        return $this->hasMany(Filiale::class, 'agence_id');
     }
     /*plusieurs bus */
 
     public function Users(){
-        return $this->hasMany(Users::class,'agence_id');
+        return $this->hasMany(User::class,'agence_id');
     }
 }

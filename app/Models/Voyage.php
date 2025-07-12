@@ -10,9 +10,9 @@ class Voyage extends Model
 {
     use HasFactory;
     use SoftDeletes;
-    
-    protected $primarykey = ['voyage_id'];
-    
+
+
+
      protected $fillable = [
         'date_voyage',
         'heure_depart',

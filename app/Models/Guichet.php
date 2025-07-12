@@ -11,13 +11,13 @@ class Guichet extends Model
     use HasFactory;
     use SoftDeletes;
 
-    protected $primaryKey = 'guichet_id';
+    
 
     protected $fillable = [
-        
+
         'numero',
-        'nom', 
-        'statut', 
+        'nom',
+        'statut',
         'filiale_id'];
 
     public function filiale()
