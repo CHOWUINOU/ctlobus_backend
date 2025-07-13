@@ -7,6 +7,19 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 class UserController extends Controller
 {
+//connexion
+
+//deconnexion
+    public function logout(Request $request)
+{
+    // Pour Laravel Sanctum, on supprime le token actuel :
+    $request->user()->currentAccessToken()->delete();
+
+    return response()->json([
+        'success' => true,
+        'message' => 'Déconnexion réussie',
+    ]);
+}
     /**
      * Display a listing of the resource.
      */
