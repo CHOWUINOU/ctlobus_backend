@@ -26,7 +26,7 @@ class VoyageController extends Controller
      */
     public function show(string $id)
     {
-         $voyage = Voyage::with('bus,filiale', 'trajet', 'chauffeur')->find($id);
+         $voyage = Voyage::with('bus.filiale', 'trajet', 'chauffeur')->find($id);
         if (!$voyage) {
             return response()->json([
                 'success' => false,
