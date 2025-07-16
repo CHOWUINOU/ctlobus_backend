@@ -147,12 +147,15 @@ class UserController extends Controller
         'nom' => 'required|string|max:255',
         'email' => 'required|email|unique:users,email',
         'password' => 'required|string|min:6|confirmed',
+        'telephone' => 'required|string|max:20',
     ]);
 
     $user = User::create([
-        'nom' => $validated['nom'],
+        'name' => $validated['nom'],
         'email' => $validated['email'],
+        'telephone' => $validated['telephone'],
         'password' => Hash::make($validated['password']),
+        'statut' => 'actif', // Par défaut, l'utilisateur est actif
     ]);
 
     // ✅ On assigne uniquement le rôle "client" pour toute inscription publique
