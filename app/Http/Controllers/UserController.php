@@ -3,23 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
+use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Models\Role;
 use App\Models\User;
 class UserController extends Controller
 {
-//connexion
 
-//deconnexion
-    public function logout(Request $request)
-{
-    // Pour Laravel Sanctum, on supprime le token actuel :
-    $request->user()->currentAccessToken()->delete();
 
-    return response()->json([
-        'success' => true,
-        'message' => 'Déconnexion réussie',
-    ]);
-}
     /**
      * Display a listing of the resource.
      */
@@ -141,6 +134,87 @@ class UserController extends Controller
             'success' => true,
             'message' => 'Utilisateur supprimé avec succès',
             'data' => null
+        ]);
+    }
+
+
+     /**
+     * Enregistre un nouvel utilisateur (inscription publique)
+     */
+    public function register(Request $request)
+{
+    $validated = $request->validate([
+        'nom' => 'required|string|max:255',
+        'email' => 'required|email|unique:users,email',
+        'password' => 'required|string|min:6|confirmed',
+    ]);
+
+    $user = User::create([
+        'nom' => $validated['nom'],
+        'email' => $validated['email'],
+        'password' => Hash::make($validated['password']),
+    ]);
+
+    // ✅ On assigne uniquement le rôle "client" pour toute inscription publique
+    $user->assignRole('client');
+
+    return response()->json([
+        'success' => true,
+        'message' => 'Inscription réussie. Veuillez vous connecter pour accéder à votre compte.',
+        'data' => $user
+    ], 201);
+}
+
+    /**
+     * Authentifie l'utilisateur et retourne un token Sanctum
+     */
+    public function login(Request $request)
+    {
+        $credentials = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required'
+        ]);
+
+        $user = User::where('email', $credentials['email'])->first();
+
+        if (!$user || !Hash::check($credentials['password'], $user->password)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'identifiants invalides'
+            ], 401);
+        }
+
+        $token = $user->createToken('auth_token')->plainTextToken;
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Connexion réussie',
+            'token' => $token,
+            'data' => $user
+        ]);
+    }
+
+     /**
+     * Déconnecte l'utilisateur en supprimant son token actuel
+     */
+    public function logout(Request $request)
+    {
+        $request->user()->currentAccessToken()->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Déconnexion réussie'
+        ]);
+    }
+
+    /**
+     * Retourne l'utilisateur actuellement connecté avec ses rôles
+     */
+    public function me(Request $request)
+    {
+        return response()->json([
+            'success' => true,
+            'user' => $request->user()->load('roles')
         ]);
     }
 
