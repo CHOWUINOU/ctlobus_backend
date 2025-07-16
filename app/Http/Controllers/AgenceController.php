@@ -35,7 +35,7 @@ class AgenceController extends Controller
             ], 404);
         }
         return response()->json([
-            'success' =>true,
+            'success' => true,
             'message' => 'Agence trouvée ',
             'data' => $agence
         ]);
@@ -60,9 +60,9 @@ class AgenceController extends Controller
 
         return response()->json([
             'success' => true,
-            'message'=> 'Agence cree avec succes',
+            'message' => 'Agence cree avec succes',
             'data' => $agence,
-        ],201);
+        ], 201);
     }
 
 
@@ -72,7 +72,7 @@ class AgenceController extends Controller
      */
     public function update(Request $request, string $id)
     {
-         $agence = Agence::find($id);
+        $agence = Agence::find($id);
         if (!$agence) {
             return response()->json([
                 'success' => false,
@@ -113,13 +113,13 @@ class AgenceController extends Controller
                 'message' => 'Agence non trouvée',
                 'data' => null
             ], 404);
-    }
-      $agence->delete();
+        }
+        $agence->delete();
 
         return response()->json([
             'success' => true,
             'message' => 'Agence supprimée avec succès',
             'data' => null
         ]);
-}
+    }
 }

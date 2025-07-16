@@ -27,8 +27,7 @@ Route::post('/login', [UserController::class, 'login'])
     ->name('login');
 
 // Inscription client (publique)
-Route::post('/register', [UserController::class, 'register'])
-    ->name('register');
+Route::post('/register', [UserController::class, 'register']);
 
 /*
 |--------------------------------------------------------------------------
