@@ -18,9 +18,8 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('photo')->nullable();
-            $table->string('telephone');
-            $table->enum('statut', ['actif', 'inactif']);
-            $table->rememberToken();
+            $table->string('telephone')->nullable();
+            $table->string('statut')->default('actif');            $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
         });

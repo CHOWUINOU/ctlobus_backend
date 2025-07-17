@@ -13,74 +13,47 @@ class RolePermissionSeeder extends Seeder
     {
         // 1. Permissions
         $permissions = [
-            // Étudiants
-            'voir-etudiants', 'creer-etudiant', 'modifier-etudiant', 'supprimer-etudiant', 'generer-attestation',
-            // Inscriptions
-            'gerer-inscriptions', 'voir-inscriptions',
-            // Paiements
-            'voir-paiements', 'valider-paiement', 'annuler-paiement', 'generer-recu', 'gerer-tranches',
-            // Notes
-            'voir-notes', 'saisir-note', 'modifier-note', 'supprimer-note', 'verrouiller-note', 'generer-pv', 'generer-bulletin',
-            // Diplômes/Attestations
-            'generer-diplome', 'valider-diplome', 'imprimer-attestation',
-            // Rapports/Dashboard
-            'voir-rapports', 'voir-dashboard',
-            // Enseignants
-            'voir-enseignants', 'creer-enseignant', 'modifier-enseignant', 'supprimer-enseignant', 'assigner-matiere',
-            // Matières
-            'voir-matieres', 'creer-matiere', 'modifier-matiere', 'supprimer-matiere',
-            // Classes/Niveaux/Groupes
-            'voir-classes', 'creer-classe', 'modifier-classe', 'supprimer-classe',
-            // Emploi du temps
-            'voir-emplois', 'creer-emploi', 'modifier-emploi', 'supprimer-emploi',
+            // Agences
+            'voir-agence', 'creer-agence', 'modifier-agence', 'supprimer-agence',
+            //Filiales
+            'voir-filiale', 'creer-filiale', 'modifier-filiale', 'supprimer-filiale',
+
             // Utilisateurs
             'voir-utilisateurs', 'creer-utilisateur', 'modifier-utilisateur', 'supprimer-utilisateur',
-            // Paramètres système
-            'voir-parametres', 'modifier-parametres', 'modifier-parametres-critiques',
-            // Gestion des rôles et permissions
-            'voir-roles', 'creer-role', 'modifier-role', 'supprimer-role',
-            'voir-permissions', 'creer-permission', 'modifier-permission', 'supprimer-permission',
-            // Cycles scolaires
-            'voir-cycles', 'creer-cycle', 'modifier-cycle', 'supprimer-cycle',
-            // Niveaux scolaires
-            'voir-niveaux', 'creer-niveau', 'modifier-niveau', 'supprimer-niveau',
-            // Spécialités
-            'voir-specialites', 'creer-specialite', 'modifier-specialite', 'supprimer-specialite',
-            // Filieres
-            'voir-filieres', 'creer-filiere', 'modifier-filiere', 'supprimer-filiere',
-            // Années académiques
-            'voir-annees', 'creer-annee', 'modifier-annee', 'supprimer-annee',
-            // Fonctions
-            'voir-fonctions', 'creer-fonction', 'modifier-fonction', 'supprimer-fonction',
-            // Disponibilités
-            'voir-disponibilites', 'creer-disponibilite', 'modifier-disponibilite', 'supprimer-disponibilite',
-            // Affectations
-            'voir-affectations', 'creer-affectation', 'modifier-affectation', 'supprimer-affectation',
-            // Affectations de niveau
-            'voir-affectations-niveau', 'creer-affectation-niveau', 'modifier-affectation-niveau', 'supprimer-affectation-niveau',
-            // Enseignement
-            'voir-enseignements', 'creer-enseignement', 'modifier-enseignement', 'supprimer-enseignement',
-            // Disponibilités des enseignants
-            'voir-disponibilites-enseignants', 'creer-disponibilite-enseignant', 'modifier-disponibilite-enseignant', 'supprimer-disponibilite-enseignant',
-            // Gestion des ressources
-            'voir-ressources', 'creer-ressource', 'modifier-ressource', 'supprimer-ressource',
-            // Gestion des notifications
-            'voir-notifications', 'creer-notification', 'modifier-notification', 'supprimer-notification',
-            // Gestion des logs
-            'voir-logs', 'creer-log', 'modifier-log', 'supprimer-log',
-            // Gestion des backups
-            'voir-backups', 'creer-backup', 'restaurer-backup',
-            // Gestion des paramètres avancés
-            'voir-parametres-avances', 'modifier-parametres-avances',
-            // Gestion des statistiques
-            'voir-statistiques', 'generer-statistiques',
-            // Gestion des alertes
-            'voir-alertes', 'creer-alerte', 'modifier-alerte', 'supprimer-alerte',
-            // Gestion des configurations
-            'voir-configurations', 'modifier-configuration',
-            // etats pdf
+
+            // Bus
+            'voir-bus', 'creer-bus', 'modifier-bus', 'supprimer-bus',
+
+            // Chauffeurs
+            'voir-chauffeur', 'creer-chauffeur', 'modifier-chauffeur', 'supprimer-chauffeur' , 'voir-trajet', 'voir-voyage',
+
+            // Guichets
+            'voir-guichet', 'creer-guichet', 'modifier-guichet', 'supprimer-guichet',
+
+            // Trajets et  (gestion conjointe)
+            'voir-trajet', 'creer-trajet', 'modifier-trajet', 'supprimer-trajet',
+
+            //Arrêts
+            'voir-arret', 'creer-arret', 'modifier-arret', 'supprimer-arret',
+
+            // associer/dissocier plusieurs arrêts à un trajet
+            'gerer-arrets-sur-trajet',
+
+            // Réservations
+            'voir-reservation', 'creer-reservation', 'modifier-reservation', 'annuler-reservation',
+
+            // Paiements
+            'voir-paiement', 'valider-paiement', 'annuler-paiement',
+
+            // Profils
+            'consulter-profil', 'modifier-profil',
+
+            //Dashboard
+            'voir-rapports', 'voir-dashboard',
         ];
 
+
+        // Création ou mise à jour des permissions en base
         foreach ($permissions as $perm) {
             Permission::firstOrCreate(['name' => $perm]);
         }
@@ -88,44 +61,64 @@ class RolePermissionSeeder extends Seeder
         // 2. Rôles et attributions des permissions
         $roles = [
             'super_admin' => $permissions,
-            'admin' => array_diff($permissions, ['modifier-parametres-critiques']),
-            'dg' => [
-                'voir-dashboard', 'voir-rapports',
-                // Toutes les permissions de lecture
-                'voir-etudiants', 'voir-inscriptions', 'voir-paiements', 'voir-notes', 'voir-enseignants',
-                'voir-matieres', 'voir-classes', 'voir-emplois', 'voir-utilisateurs', 'voir-parametres',
-                'voir-roles', 'voir-permissions', 'voir-cycles', 'voir-niveaux', 'voir-specialites',
-                'voir-filieres', 'voir-annees', 'voir-fonctions', 'voir-disponibilites', 'voir-affectations',
-                'voir-affectations-niveau', 'voir-enseignements', 'voir-disponibilites-enseignants',
-                'voir-ressources', 'voir-notifications', 'voir-logs', 'voir-backups',
-                'voir-parametres-avances', 'voir-statistiques', 'voir-alertes',
-                'voir-configurations',
+
+            'admin_agence' => [
+                array_diff($permissions, ['modifier-parametres-critiques']),
+
+
+                // Gestion filiales
+                'voir-filiale', 'creer-filiale', 'modifier-filiale', 'supprimer-filiale',
+                // Gestion utilisateurs (chefs filiales, guichets, chauffeurs)
+                'voir-utilisateurs', 'creer-utilisateur', 'modifier-utilisateur', 'supprimer-utilisateur',
+                // Gestion bus
+                'voir-bus', 'creer-bus', 'modifier-bus', 'supprimer-bus',
+                // Gestion chauffeurs
+                'voir-chauffeur', 'creer-chauffeur', 'modifier-chauffeur', 'supprimer-chauffeur','voir-trajet', 'voir-voyage',
+                // Gestion guichets
+                'voir-guichet', 'creer-guichet', 'modifier-guichet', 'supprimer-guichet',
+                // Gestion trajets et arrêts
+                'voir-trajet', 'creer-trajet', 'modifier-trajet', 'supprimer-trajet',
+                'voir-arret', 'creer-arret', 'modifier-arret', 'supprimer-arret',
+                'gerer-arrets-sur-trajet',
+                // Réservations et paiements
+                'voir-reservation', 'creer-reservation', 'modifier-reservation', 'annuler-reservation',
+                'voir-paiement', 'valider-paiement', 'annuler-paiement',
+                // Rapports & dashboard
+                'voir-rapports', 'voir-dashboard',
             ],
-            'secretaire' => [
-                'voir-inscriptions', 'gerer-inscriptions',
-                'voir-etudiants', 'creer-etudiant', 'modifier-etudiant', 'supprimer-etudiant', 'generer-attestation',
-                'voir-paiements', 'valider-paiement', 'generer-recu', 'voir-emplois',
+
+            'chef_filiale' => [
+                // Gestion limitée à la filiale
+                'voir-filiale', 'modifier-filiale',
+
+                // Bus, chauffeurs, guichets
+                'voir-bus', 'creer-bus', 'modifier-bus', 'supprimer-bus',
+                'voir-chauffeur', 'creer-chauffeur', 'modifier-chauffeur', 'supprimer-chauffeur',
+                'voir-guichet',
+
+                // Trajets et arrêts
+                'voir-trajet', 'creer-trajet', 'modifier-trajet', 'supprimer-trajet',
+                'voir-arret', 'creer-arret', 'modifier-arret', 'supprimer-arret',
+                'gerer-arrets-sur-trajet',
+
+                // Réservations et paiements de la filiale
+                'voir-reservation', 'creer-reservation', 'modifier-reservation', 'annuler-reservation',
+                'voir-paiement', 'valider-paiement', 'annuler-paiement',
+
+                'voir-rapports', 'voir-dashboard',
             ],
-            'directeur_affaires_academiques' => [
-                'voir-notes', 'generer-pv', 'generer-bulletin', 'verrouiller-note',
-                'generer-diplome', 'valider-diplome', 'imprimer-attestation', 'voir-rapports',
+
+            'guichetier' => [
+                'voir-reservation', 'creer-reservation', 'modifier-reservation', 'annuler-reservation',
+                'voir-paiement', 'valider-paiement', 'annuler-paiement',
             ],
-            'chef_departement' => [
-                'voir-notes', 'saisir-note', 'modifier-note', 'verrouiller-note',
-                'voir-etudiants', 'voir-enseignants',
+
+            'chauffeur' => [
+                'voir-trajet', 'voir-voyage',
             ],
-            'responsable_niveau' => [
-                'voir-notes', 'saisir-note', 'modifier-note', 'verrouiller-note',
-                'voir-etudiants',
-            ],
-            'enseignant' => [
-                'voir-notes', 'saisir-note', 'modifier-note', 'voir-matieres', 'voir-emplois',
-            ],
-            'etudiant' => [
-                'voir-notes', 'generer-bulletin', 'imprimer-attestation', 'voir-paiements', 'generer-recu',
-            ],
-            'comptable' => [
-                'voir-paiements', 'valider-paiement', 'annuler-paiement', 'generer-recu', 'gerer-tranches', 'voir-etudiants', 'voir-rapports',
+
+            'client' => [
+                'creer-reservation', 'voir-reservation',
             ],
         ];
 
@@ -136,11 +129,11 @@ class RolePermissionSeeder extends Seeder
 
         // 3. Création du super_admin par défaut (si besoin)
         $superAdmin = User::firstOrCreate(
-                ['email' => 'alphedtatong@gmail.com'],
+                ['email' => 'ctlo@gmail.com'],
                 [
-                    'login' => 'superadmin',
-                    'name' => 'Super Admin',
-                    'password' => bcrypt('31072002'), // Change ce mot de passe après le seed!
+                    
+                    'name' => 'SuperAdmin',
+                    'password' => bcrypt('20031974'), // Change ce mot de passe après le seed!
                 ]
             );
 
